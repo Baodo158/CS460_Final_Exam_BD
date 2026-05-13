@@ -19,7 +19,7 @@ My plan is to start with Dijkstra, then make the distance table and do the recur
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [05/12/2026]: [Dijkstra and Distance Table]
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
@@ -49,8 +49,8 @@ _Your entry here._
 
 | Part | Estimated Hours |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
+| Part 1: Problem Analysis | 45 |
+| Part 2: Precomputation Design | 120 |
 | Part 3: Algorithm Correctness | |
 | Part 4: Search Design | |
 | Part 5: State and Search Space | |

@@ -17,13 +17,13 @@
 > per question. Each bullet should be 1-2 sentences max.
 
 - **Why a single shortest-path run from S is not enough:**
-  _Your answer here._
+A single shortest-path run from S is not enough because it's only gives the cheapest cost from S to every reachable node. It does not determine which order the relics should be collected in. 
 
 - **What decision remains after all inter-location costs are known:**
-  _Your answer here._
+After the shortest-path distances are known, the remaining decision is choosing the best order to visit the relics before reaching the exit. 
 
 - **Why this requires a search over orders (one sentence):**
-  _Your answer here._
+Different relic orders can produce different total fuel costs so the algorithm must search over possible orders to find the cheapest overall route. 
 
 ---
 
@@ -35,8 +35,8 @@
 
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| spawn | The route always starts from the spawn node so shortest-path distances are needed from this location |
+| relic | After collecting a relic, the next section of the route begins from that relic node |
 
 ### Part 2b: Distance Storage
 
@@ -44,20 +44,20 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | Nested dictionary |
+| What the keys represent | Outer keys represent source nodes, and inner keys represent destination nodes |
+| What the values represent | The values store the minimum fuel cost between two nodes |
+| Lookup time complexity | O(1) average case |
+| Why O(1) lookup is possible | Python dictionaries are implemented using hash tables, which allow constant average-time lookup operations |
 
 ### Part 2c: Precomputation Complexity
 
 > State the total complexity and show the arithmetic. Two to three lines max.
 
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** k + 1
+- **Cost per run:** O(m log n)
+- **Total complexity:** O((k + 1) m log n)
+- **Justification (one line):** Dijkstra is run from the spawan node and each relic node to avoid repeated shortest-path computations during recursive search
 
 ---
 

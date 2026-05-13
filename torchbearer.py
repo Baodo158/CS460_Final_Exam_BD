@@ -25,16 +25,14 @@ import heapq
 # =============================================================================
 
 def explain_problem():
-    """
-    Returns
-    -------
-    str
-        Your Part 1 README answers, written as a string.
-        Must match what you wrote in README Part 1.
-
-    TODO
-    """
-    return "TODO"
+    return (
+        "Question 1: \n"
+        "A single shortest-path run from S is not enough because it's only gives the cheapest cost from S to every reachable node. It does not determine which order the relics should be collected in. \n"
+        "Question 2: \n"
+        "After the shortest-path distances are known, the remaining decision is choosing the best order to visit the relics before reaching the exit. \n"
+        "Question 3: \n"
+        "Different relic orders can produce different total fuel costs so the algorithm must search over possible orders to find the cheapest overall route."
+    )
 
 
 # =============================================================================
@@ -42,59 +40,44 @@ def explain_problem():
 # =============================================================================
 
 def select_sources(spawn, relics, exit_node):
-    """
-    Parameters
-    ----------
-    spawn : node
-    relics : list[node]
-    exit_node : node
-
-    Returns
-    -------
-    list[node]
-        No duplicates. Order does not matter.
-
-    TODO
-    """
+    sources = []
+    for node in [spawn] + relics:
+        if node not in sources:
+            sources.append(node)
+    return sources
     pass
 
 
 def run_dijkstra(graph, source):
-    """
-    Parameters
-    ----------
-    graph : dict[node, list[tuple[node, int]]]
-        graph[u] = [(v, cost), ...]. All costs are nonnegative integers.
-    source : node
+    nodes =set(graph.keys())
+    for edges in graph.value():
+        for neighbor, cost in edges:
+            nodes.add(neighbor)
+    nodes.add(source)
 
-    Returns
-    -------
-    dict[node, float]
-        Minimum cost from source to every node in graph.
-        Unreachable nodes map to float('inf').
+    dist= {node: float('inf') for node in nodes}
+    dist[source] = 0
 
-    TODO
-    """
+    heap = [(0, source)]
+
+    while heap:
+        current_dist, current_node = heapq.heappop(heap)
+        if current_dist > dist[current_node]:
+            continue
+        for neighbor, cost in graph.get(current_node, []):
+            new_dist = current_dist + cost
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                heapq.heappush(heap, (new_dist, neighbor))
+    return dist
     pass
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
-    """
-    Parameters
-    ----------
-    graph : dict[node, list[tuple[node, int]]]
-    spawn : node
-    relics : list[node]
-    exit_node : node
-
-    Returns
-    -------
-    dict[node, dict[node, float]]
-        Nested structure supporting dist_table[u][v] lookups
-        for every source u your design requires.
-
-    TODO
-    """
+    dist_table = {}
+    for source in select_sources(spawn, relics, exit_node):
+        dist_table[source] = run_dijkstra(graph, source)
+    return dist_table
     pass
 
 
