@@ -1,7 +1,7 @@
 # Development Log – The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Bao Do
+**Student ID:** 131987229
 
 > Instructions: Write at least four dated entries. Required entry types are marked below.
 > Two to five sentences per entry is sufficient. Write entries as you go, not all in one
@@ -10,12 +10,12 @@
 
 ---
 
-## Entry 1 – [Date]: Initial Plan
+## Entry 1 – [05/11/2026]: Initial Plan
 
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
 
-_Your entry here._
+My plan is to start with Dijkstra, then make the distance table and do the recursive search after that. I think the search and pruning part will probably be the hardest part so I plan to test the code after each main step. 
 
 ---
 
