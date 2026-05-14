@@ -86,35 +86,31 @@ def precompute_distances(graph, spawn, relics, exit_node):
 # =============================================================================
 
 def dijkstra_invariant_check():
-    """
-    Returns
-    -------
-    str
-        Your Part 3 README answers, written as a string.
-        Must match what you wrote in README Part 3.
-
-    TODO
-    """
-    return "TODO"
-
+    return (
+        "For nodes already finalized (in S): \n"
+        "These nodes already store their true shortest-path distance from the source node. \n\n"
+        "For nodes not yet finalized (not in S): \n"
+        "These nodes currently store the best distance discovered so far but their values may still improve later. \n\n"
+        "Initialization : why the invariant holds before iteration 1: \n"
+        "The source node starts with distance 0 while all other nodes start at infinity.\n"
+        "At this point, no incorrect distances have been finalized.\n\n"
+        "Maintenance : why finalizing the min-dist node is always correct: \n"
+        "The smallest tentative node can safely be finalized because all edge weights are nonnegative. \n"
+        "Any later path reaching that node would not produce a smaller distance. \n\n"
+        "Termination : what the invariant guarantees when the algorithm ends: \n"
+        "When the algorithm finishes, every reachable node has the correct shortest-path distance stored in the table. \n\n"
+        "Why This Matters for the Route Planner \n"
+        "The recursive route planner depends on accurate shortest-path distances when comparing different relic orders because incorrect distances could cause the algorithm to choose a non-optimal route."
+    )
 
 # =============================================================================
 # PART 4
 # =============================================================================
 
 def explain_search():
-    """
-    Returns
-    -------
-    str
-        Your Part 4 README answers, written as a string.
-        Must match what you wrote in README Part 4.
-
-    TODO
-    """
-    return "TODO"
-
-
+    return ()
+        
+    
 # =============================================================================
 # PARTS 5 + 6
 # =============================================================================

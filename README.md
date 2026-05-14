@@ -72,29 +72,30 @@ Different relic orders can produce different total fuel costs so the algorithm m
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+These nodes already store their true shortest-path distance from the source node. 
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+These nodes currently store the best distance discovered so far but their values may still improve later. 
 
 ### Part 3b: Why Each Phase Holds
 
 > One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+The source node starts with distance 0 while all other nodes start at infinity.
+At this point, no incorrect distances have been finalized.
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+The smallest tentative node can safely be finalized because all edge weights are nonnegative.
+Any later path reaching that node would not produce a smaller distance.
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+When the algorithm finishes, every reachable node has the correct shortest-path distance stored in the table.
 
 ### Part 3c: Why This Matters for the Route Planner
 
-> One sentence connecting correct distances to correct routing decisions.
+The recursive route planner depends on accurate shortest-path distances when comparing different relic orders because incorrect distances could cause the algorithm to choose a non-optimal route. 
 
-_Your answer here._
 
 ---
 

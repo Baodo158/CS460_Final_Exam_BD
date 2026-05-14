@@ -24,7 +24,9 @@ My plan is to start with Dijkstra, then make the distance table and do the recur
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+I implemented select_sources, run_dijkstra and precompute_distances first. The main design decision was to only run Dijkstra from locations that are actually important to the route, which are the spawn node and each relic node.
+
+This reduced unnecessary repeated shortest-path computations during the recursive search later. I also used a nested dictionary structure for the distance table so the search could access shortest-path costs with constant average-time lookup. 
 
 ---
 
