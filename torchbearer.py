@@ -108,7 +108,20 @@ def dijkstra_invariant_check():
 # =============================================================================
 
 def explain_search():
-    return ()
+    return (
+        "**The failure mode:**\n"
+        "A greedy strategy may choose the closet next relic without considering future travel costs. \n\n"
+        "**Counter-example setup:**\n"
+        "In the example, S to B costs 1 and S to C costs 2, but the later connections between relics affect the total route cost.\n\n"
+        "**What greedy picks:**\n"
+        "Greedy would likely to choose the nearest relic first because it only considers the next immediate move.\n\n"
+        "**What optimal picks:**\n"
+        "The optimal solution chooses the relic order with the minimum overall fuel cost.\n\n"
+        "**Why greedy loses:**\n"
+        "A locally cheap move can force more expensive travel later in the route.\n\n"
+        "What the Algorithm Must Explore\n"
+        "The algorithm must explore multiple relic orders because the best route depends on the entire order of decisions."
+    )
         
     
 # =============================================================================
@@ -116,57 +129,61 @@ def explain_search():
 # =============================================================================
 
 def find_optimal_route(dist_table, spawn, relics, exit_node):
-    """
-    Parameters
-    ----------
-    dist_table : dict[node, dict[node, float]]
-        Output of precompute_distances.
-    spawn : node
-    relics : list[node]
-        Every node in this list must be visited at least once.
-    exit_node : node
-        The route must end here.
+    best = [float('inf'), []]
+    relics_remaining = set(relics)
+    relics_visited_order = []
 
-    Returns
-    -------
-    tuple[float, list[node]]
-        (minimum_fuel_cost, ordered_relic_list)
-        Returns (float('inf'), []) if no valid route exists.
-
-    TODO
-    """
+    _explore(
+        dist_table,
+        spawn,
+        relics_remaining,
+        relics_visited_order,
+        0,
+        exit_node,
+        best
+    )
+    return best[0], best[1]
     pass
 
 
 def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
              cost_so_far, exit_node, best):
-    """
-    Recursive helper for find_optimal_route.
+    # Pruning is safe because a branch is only stopped when its current cost
+    # is already greater than or equal to the best route found.
+    # Since all edge weights are nonnegative, contiuning that branch cannot
+    # produce a cheaper route. 
+    if cost_so_far >= best[0]:
+        return
+    
+    if not relics_remaining:
+        exit_cost = dist_table[current_loc].get(exit_node, float('inf'))
+        total_cost = cost_so_far + exit_cost
 
-    Parameters
-    ----------
-    dist_table : dict[node, dict[node, float]]
-    current_loc : node
-    relics_remaining : collection
-        Your chosen data structure from README Part 5b.
-    relics_visited_order : list[node]
-    cost_so_far : float
-    exit_node : node
-    best : list
-        Mutable container for the best solution found so far.
+        if total_cost < best[0]:
+            best[0] = total_cost
+            best[1] = list(relics_visited_order)
+        return
+    
+    for relic in list(relics_remaining):
+        travel_cost = dist_table[current_loc].get(relic, float('inf'))
 
-    Returns
-    -------
-    None
-        Updates best in place.
+        if travel_cost == float('inf'):
+            continue
 
-    TODO
-    Implement: base case, pruning, recursive case, backtracking.
+        relics_remaining.remove(relic)
+        relics_visited_order.append(relic)
 
-    REQUIRED: Add a 1-2 sentence comment near your pruning condition
-    explaining why it is safe (cannot skip the optimal solution).
-    This comment is graded.
-    """
+        _explore(
+            dist_table,
+            relic,
+            relics_remaining,
+            relics_visited_order,
+            cost_so_far + travel_cost,
+            exit_node,
+            best
+        )
+        relics_visited_order.pop()
+        relics_remaining.add(relic)
     pass
 
 

@@ -103,20 +103,15 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 ### Why Greedy Fails
 
-> State the failure mode. Then give a concrete counter-example using specific node names
-> or costs (you may use the illustration example from the spec). Three to five bullets.
-
-- **The failure mode:** _Your answer here._
-- **Counter-example setup:** _Your answer here._
-- **What greedy picks:** _Your answer here._
-- **What optimal picks:** _Your answer here._
-- **Why greedy loses:** _Your answer here._
+- **The failure mode:** A greedy strategy may choose the closet next relic without considering future travel costs. 
+- **Counter-example setup:** In the example, S to B costs 1 and S to C costs 2, but the later connections between relics affect the total route cost.
+- **What greedy picks:** Greedy would likely to choose the nearest relic first because it only considers the next immediate move. 
+- **What optimal picks:** The optimal solution chooses the relic order with the minimum overall fuel cost. 
+- **Why greedy loses:** A locally cheap move can force more expensive travel later in the route. 
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
-
-- _Your answer here._
+- The algorithm must explore multiple relic orders because the best route depends on the entire order of decisions. 
 
 ---
 
@@ -124,33 +119,26 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 ### Part 5a: State Representation
 
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
-
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
-| Current location | | | |
-| Relics already collected | | | |
-| Fuel cost so far | | | |
+| Current location | `current_loc` | node | The node the search is currently at. |
+| Relics already collected | `relics_visited_order` | list | The relics collected so far in order. |
+| Fuel cost so far | `cost_so_far` | float/int | The fuel cost used so far. |
 
 ### Part 5b: Data Structure for Visited Relics
 
-> Fill in the table.
-
 | Property | Your answer |
 |---|---|
-| Data structure chosen | |
-| Operation: check if relic already collected | Time complexity: |
-| Operation: mark a relic as collected | Time complexity: |
-| Operation: unmark a relic (backtrack) | Time complexity: |
-| Why this structure fits | |
+| Data structure chosen | Set, using `relics_remaining` |
+| Operation: check if relic already collected | Time complexity: O(1) average case |
+| Operation: mark a relic as collected | Time complexity: O(1) average case |
+| Operation: unmark a relic (backtrack) | Time complexity: O(1) average case |
+| Why this structure fits | A set makes it easy to remove a relic before recursion and add it back during backtracking. |
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
-- **Worst-case number of orders considered:** _Your answer (in terms of k)._
-- **Why:** _One-line justification._
+- **Worst-case number of orders considered:** `k!`
+- **Why:** With k relics, the algorithm may need to try every possible relic order. 
 
 ---
 
@@ -160,23 +148,24 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 > Three bullets.
 
-- **What is tracked:** _Your answer here._
-- **When it is used:** _Your answer here._
-- **What it allows the algorithm to skip:** _Your answer here._
+- **What is tracked:** The algorithm tracks the best total fuel cost found so far and the relic order for that route.
+- **When it is used:** It is used during recursion to compare complete routes and stop branches that cannot improve the current best route. 
+- **What it allows the algorithm to skip:** It allows the algorithm to skip branches where the current cost is already greater than or equal to the best route found. 
 
 ### Part 6b: Lower Bound Estimation
 
 > Three bullets.
 
-- **What information is available at the current state:** _Your answer here._
-- **What the lower bound accounts for:** _Your answer here._
-- **Why it never overestimates:** _Your answer here._
+- **What information is available at the current state:** The algorithm knows the current location, remaining relics, cost so far, exit node and distance table. 
+- **What the lower bound accounts for:** This implementation uses cost_so_far as a simple lower bound for the current branch. 
+- **Why it never overestimates:** Since edge weights are nonnegative, the final route cost can only stay the same or increase from cost_so_far. 
 
 ### Part 6c: Pruning Correctness
 
 > One to two bullets. Explain why pruning is safe.
 
-- _Your answer here._
+- Prunning is safe because a branch is only stopped when its current cost is already greater than or equal to the best route found. 
+- Since all edge weights are nonnegative, contiuning that branch cannot produce a cheaper route. 
 
 ---
 
@@ -184,4 +173,4 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 > Bullet list. If none beyond lecture notes, write that.
 
-- _Your references here._
+- Lecture notes 

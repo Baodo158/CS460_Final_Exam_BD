@@ -30,9 +30,11 @@ This reduced unnecessary repeated shortest-path computations during the recursiv
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5/13/2026]: [Search Bug / Design Change]
 
-_Your entry here._
+While working on _explore, my first version only tracked the minimum fuel cost during recursion. Later, I realized this was not enough because the assignment also required returning the actual relic collection order.
+
+To fix this, I added relics_visted_order to the recursive state. When a relic is chosen, it is removed from relics_remaining and appended to relics_visited_order, then after the recursive call the changes are undone using backtracking so other possible relic orders can still be explored correctly. 
 
 ---
 
