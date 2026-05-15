@@ -50,7 +50,7 @@ def select_sources(spawn, relics, exit_node):
 
 def run_dijkstra(graph, source):
     nodes =set(graph.keys())
-    for edges in graph.value():
+    for edges in graph.values():
         for neighbor, cost in edges:
             nodes.add(neighbor)
     nodes.add(source)
@@ -192,22 +192,8 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
 # =============================================================================
 
 def solve(graph, spawn, relics, exit_node):
-    """
-    Parameters
-    ----------
-    graph : dict[node, list[tuple[node, int]]]
-    spawn : node
-    relics : list[node]
-    exit_node : node
-
-    Returns
-    -------
-    tuple[float, list[node]]
-        (minimum_fuel_cost, ordered_relic_list)
-        Returns (float('inf'), []) if no valid route exists.
-
-    TODO
-    """
+    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    return find_optimal_route(dist_table,spawn, relics, exit_node)
     pass
 
 

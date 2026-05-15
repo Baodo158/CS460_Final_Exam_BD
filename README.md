@@ -4,17 +4,9 @@
 **Student ID:** 131987229
 **Course:** CS 460 – Algorithms | Spring 2026
 
-> This README is your project documentation. Write it the way a developer would document
-> their design decisions , bullet points, brief justifications, and concrete examples where
-> required. You are not writing an essay. You are explaining what you built and why you built
-> it that way. Delete all blockquotes like this one before submitting.
-
 ---
 
 ## Part 1: Problem Analysis
-
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
 
 - **Why a single shortest-path run from S is not enough:**
 A single shortest-path run from S is not enough because it's only gives the cheapest cost from S to every reachable node. It does not determine which order the relics should be collected in. 
@@ -31,16 +23,12 @@ Different relic orders can produce different total fuel costs so the algorithm m
 
 ### Part 2a: Source Selection
 
-> List the source node types as a bullet list. For each, one-line reason.
-
 | Source Node Type | Why it is a source |
 |---|---|
 | spawn | The route always starts from the spawn node so shortest-path distances are needed from this location |
 | relic | After collecting a relic, the next section of the route begins from that relic node |
 
 ### Part 2b: Distance Storage
-
-> Fill in the table. No prose required.
 
 | Property | Your answer |
 |---|---|
@@ -52,8 +40,6 @@ Different relic orders can produce different total fuel costs so the algorithm m
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
 - **Number of Dijkstra runs:** k + 1
 - **Cost per run:** O(m log n)
 - **Total complexity:** O((k + 1) m log n)
@@ -63,13 +49,7 @@ Different relic orders can produce different total fuel costs so the algorithm m
 
 ## Part 3: Algorithm Correctness
 
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
-
 ### Part 3a: What the Invariant Means
-
-> Two bullets: one for finalized nodes, one for non-finalized nodes.
-> Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
 These nodes already store their true shortest-path distance from the source node. 
@@ -78,8 +58,6 @@ These nodes already store their true shortest-path distance from the source node
 These nodes currently store the best distance discovered so far but their values may still improve later. 
 
 ### Part 3b: Why Each Phase Holds
-
-> One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
 The source node starts with distance 0 while all other nodes start at infinity.
@@ -95,7 +73,6 @@ When the algorithm finishes, every reachable node has the correct shortest-path 
 ### Part 3c: Why This Matters for the Route Planner
 
 The recursive route planner depends on accurate shortest-path distances when comparing different relic orders because incorrect distances could cause the algorithm to choose a non-optimal route. 
-
 
 ---
 
@@ -146,15 +123,11 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 ### Part 6a: Best-So-Far Tracking
 
-> Three bullets.
-
 - **What is tracked:** The algorithm tracks the best total fuel cost found so far and the relic order for that route.
 - **When it is used:** It is used during recursion to compare complete routes and stop branches that cannot improve the current best route. 
 - **What it allows the algorithm to skip:** It allows the algorithm to skip branches where the current cost is already greater than or equal to the best route found. 
 
 ### Part 6b: Lower Bound Estimation
-
-> Three bullets.
 
 - **What information is available at the current state:** The algorithm knows the current location, remaining relics, cost so far, exit node and distance table. 
 - **What the lower bound accounts for:** This implementation uses cost_so_far as a simple lower bound for the current branch. 
@@ -162,15 +135,11 @@ The recursive route planner depends on accurate shortest-path distances when com
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
-
 - Prunning is safe because a branch is only stopped when its current cost is already greater than or equal to the best route found. 
 - Since all edge weights are nonnegative, contiuning that branch cannot produce a cheaper route. 
 
 ---
 
 ## References
-
-> Bullet list. If none beyond lecture notes, write that.
 
 - Lecture notes 
